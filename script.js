@@ -7,7 +7,7 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-<script>
+
 var myInput = document.getElementById("psw");
 var letter = document.getElementById("letter");
 var capital = document.getElementById("capital");
@@ -65,7 +65,7 @@ myInput.onkeyup = function() {
     length.classList.add("invalid");
   }
 }
-</script>
+
 }
 
 // Add event listener to generate button
