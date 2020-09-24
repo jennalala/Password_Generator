@@ -2,27 +2,38 @@
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+var letter = /[a-z]/;
+var upper  =/[A-Z]/;
+var number = /[0-9]/;
+var specialCharacter = /"!@#$%^&*()\<>?"/
 
-  passwordText.value = password;
+var char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var num = '0123456789';
+var sym = '!@#$%^&*=-_';
 
-  function generatePassword()
-  var lowercaseCharString = "abcdefghijklmnopqrstuvwxyz";
-  var uppercaseCharString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  var numberCharString = "0123456789";
-  var specialCharacterCharString = "!@#$%^&*()_+<>?-=";
-  var passwordCharString = "";
+var charNum = document.getElementById("charNum");
+var numBox = document.getElementById("num");
+var symBox = document.getElementById("sym");
+var submit = document.getElementById("submit");
+var yourPw = document.getElementById("yourPw");
 
-  var passwordLength = 0;
+submit.addEventListener("click",function(e){
+    var characters = char;
+    (numBox.checked) ? characters += num : '';
+    (symBox.checked) ? characters += sym : '';
+    yourPw.value = password(charNum.value, characters);
+});
 
-  
-
-  if (
-    passwordText
-  )
-
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+function password(l,characters){
+		var pwd = '';
+    for(var i = 0; i<l; i++){
+    		pwd += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return pwd;
+}
+function writePassword(): {
+var password = generatePassword();
+var passwordText = document.querySelector("#password");
+    
+      passwordText.value = password;
+}
