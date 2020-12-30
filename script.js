@@ -1,72 +1,90 @@
-// Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-// Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
-var myInput = document.getElementById("psw");
-var letter = document.getElementById("letter");
-var capital = document.getElementById("capital");
-var number = document.getElementById("number");
-var length = document.getElementById("length");
-
-// When the user clicks on the password field, show the message box
-myInput.onfocus = function() {
-  document.getElementById("message").style.display = "block";
 }
 
-// When the user clicks outside of the password field, hide the message box
-myInput.onblur = function() {
-  document.getElementById("message").style.display = "none";
-}
+function generatePassword() {
+  var lowerCaseCharString = "abcdefghijklmnopqrstuvwxyz";
+  var upperCaseCharString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var numericCharString = "0123456789";
+  var specialCharString = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+  var passwordCharSet = "";
 
-// When the user starts to type something inside the password field
-myInput.onkeyup = function() {
-  // Validate lowercase letters
-  var lowerCaseLetters = /[a-z]/g;
-  if(myInput.value.match(lowerCaseLetters)) {
-    letter.classList.remove("invalid");
-    letter.classList.add("valid");
-  } else {
-    letter.classList.remove("valid");
-    letter.classList.add("invalid");
-}
-
-  // Validate capital letters
-  var upperCaseLetters = /[A-Z]/g;
-  if(myInput.value.match(upperCaseLetters)) {
-    capital.classList.remove("invalid");
-    capital.classList.add("valid");
-  } else {
-    capital.classList.remove("valid");
-    capital.classList.add("invalid");
+  var passwordLength = 0;
+  var lowerCase;
+  var upperCase;
+  var numeric;
+  var specialChar;
+  var characterChoice = false;
+  var finalPasswordString = "";
+  while (
+    passwordLength < 8 ||
+    passwordLength > 128 ||
+    isNaN(passwordLength) ||
+    Number.isInteger(+passwordLength) != true
+  ) {
+    passwordLength = prompt("Choose between 8 and 128 characters.");
+    if (passwordLength === null) {
+      return "Cancelled Generated Password";
+    } else {
+      if (passwordLength < 8) {
+        alert("Password length must be longer than 8 characters");
+      } else if (passwordLength > 128) {
+        alert("Password length must be less than 129 characters.");
+      } else if (
+        isNaN(passwordLength) ||
+        Number.isInteger(+passwordLength) != true
+      ) {
+        alert(
+          "Password length must be a whole number greater than 8 but less than 129"
+        );
+      }
+    }
   }
+  while (characterChoice === false) {
 
-  // Validate numbers
-  var numbers = /[0-9]/g;
-  if(myInput.value.match(numbers)) {
-    number.classList.remove("invalid");
-    number.classList.add("valid");
-  } else {
-    number.classList.remove("valid");
-    number.classList.add("invalid");
+    lowerCase = confirm("Click OK to use lowercase letters.");
+    if (lowerCase) {
+      passwordCharSet += lowerCaseCharString;
+    }
+
+    upperCase = confirm("Click OK to use uppercase letters.");
+    if (upperCase) {
+      passwordCharSet += upperCaseCharString;
+    }
+
+    numeric = confirm("Click OK to use numbers.");
+    if (numeric) {
+      passwordCharSet += numericCharString;
+    }
+
+    specialChar = confirm("Click OK to use special characters.");
+    if (specialChar) {
+      passwordCharSet += specialCharString;
+    }
+
+    if (
+      lowerCase === true ||
+      upperCase === true ||
+      numeric === true ||
+      specialChar === true
+    ) {
+      characterChoice = true;
+    } else {
+      alert("Confirm at least one character type to include in password.");
+    }
   }
+  var numCharacterOptions = passwordCharSet.length;
+  var passwordCharIndex;
 
-  // Validate length
-  if(myInput.value.length >= 8) {
-    length.classList.remove("invalid");
-    length.classList.add("valid");
-  } else {
-    length.classList.remove("valid");
-    length.classList.add("invalid");
+  for (i = 0; i < passwordLength; i++) {
+    passwordCharIndex = Math.floor(Math.random() * numCharacterOptions);
+    finalPasswordString += passwordCharSet[passwordCharIndex];
   }
+  return finalPasswordString;
 }
-
-}
-
-// Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
